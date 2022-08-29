@@ -1,0 +1,73 @@
+title: "MechaCarChallenge"
+output: html_notebook
+---
+
+```{r}
+library(dplyr)
+```
+
+Deliverable 1
+
+```{r}
+MechaCar_mpg <- read.csv('MechaCar_mpg.csv',check.names = F,stringsAsFactors = F)
+```
+
+```{r}
+lm(mpg ~ vehicle_length + vehicle_weight + spoiler_angle + ground_clearance + AWD, data=MechaCar_mpg)
+```
+
+```{r}
+summary(lm(mpg ~ vehicle_length + vehicle_weight + spoiler_angle + ground_clearance + AWD, data=MechaCar_mpg))
+```
+
+Deliverable 2
+
+```{r}
+Suspension_Coil <- read.csv('Suspension_Coil.csv',check.names = F,stringsAsFactors = F)
+```
+
+```{r}
+total_summary <- Suspension_Coil %>% 
+  summarize(Mean = mean(PSI),
+            Median = median(PSI),
+            Variance = var(PSI),
+            SD = sd(PSI))
+total_summary
+```
+
+```{r}
+lot_summary <- Suspension_Coil %>% 
+  group_by(Manufacturing_Lot) %>% 
+  summarize(Mean = mean(PSI),
+            Median = median(PSI),
+            Variance = var(PSI),
+            SD = sd(PSI))
+lot_summary
+```
+
+Deliverable 3
+
+```{r}
+Suspension_Coil$PSI %>% t.test(mu = 1500)
+```
+
+```{r}
+Suspension_Coil %>% 
+  filter(Manufacturing_Lot == "Lot1") %>% 
+  .$PSI %>% 
+  t.test(mu = 1500)
+```
+
+```{r}
+Suspension_Coil %>% 
+  filter(Manufacturing_Lot == "Lot2") %>% 
+  .$PSI %>% 
+  t.test(mu = 1500)
+```
+
+```{r}
+Suspension_Coil %>% 
+  filter(Manufacturing_Lot == "Lot3") %>% 
+  .$PSI %>% 
+  t.test(mu = 1500)
+```
